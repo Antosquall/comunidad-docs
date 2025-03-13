@@ -1,0 +1,3393 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API de Gestión de Comunidad",
+    "description": "API para gestionar viviendas, usuarios y pagos",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.pro.com",
+      "description": "Servidor de Producción"
+    },
+    {
+      "url": "https://api.test.com",
+      "description": "Servidor de Test"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Comunidades",
+      "description": "API de comunidades"
+    },
+    {
+      "name": "Gestión de las actividades",
+      "description": "API para la gestión de las actividades"
+    },
+    {
+      "name": "Proveedor",
+      "description": "API de Proveedores"
+    },
+    {
+      "name": "Gestión de los cargos",
+      "description": "API para la gestión de los cargos"
+    },
+    {
+      "name": "TipoCargo",
+      "description": "API de Tipos de Cargo"
+    },
+    {
+      "name": "Reservas",
+      "description": "API de reservas"
+    },
+    {
+      "name": "ComunidadProveedor",
+      "description": "API de Comunidades de Proveedores"
+    },
+    {
+      "name": "Cargos de la comunidad",
+      "description": "Gestión de los cargos de la comunidad"
+    },
+    {
+      "name": "Rol",
+      "description": "API de Roles"
+    },
+    {
+      "name": "Gestionar los usuarios",
+      "description": "API para la gestión de usuarios"
+    },
+    {
+      "name": "Viviendas",
+      "description": "API para la gestión de viviendas"
+    }
+  ],
+  "paths": {
+    "/api/viviendas/{id}": {
+      "get": {
+        "tags": [
+          "Viviendas"
+        ],
+        "summary": "Obtiene una vivienda por ID",
+        "description": "Devuelve una vivienda por su ID",
+        "operationId": "getViviendaById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "No se ha encontrado la vivienda",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViviendaDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViviendaDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Vivienda obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViviendaDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Viviendas"
+        ],
+        "summary": "Actualizar una vivienda",
+        "description": "Actualiza una vivienda por su ID",
+        "operationId": "updateVivienda",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViviendaDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "No se ha encontrado la vivienda",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViviendaDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViviendaDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Vivienda actualizada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViviendaDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Viviendas"
+        ],
+        "summary": "Eliminar una vivienda",
+        "description": "Elimina una vivienda por su ID",
+        "operationId": "deleteVivienda",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Vivienda eliminada"
+          },
+          "404": {
+            "description": "No se ha encontrado la vivienda"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/api/usuarios/{id}": {
+      "get": {
+        "tags": [
+          "Gestionar los usuarios"
+        ],
+        "summary": "Obtiene un usuario por ID",
+        "description": "Devuelve un usuario por su ID",
+        "operationId": "getUsuarioById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario obtenido",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el usuario",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Gestionar los usuarios"
+        ],
+        "summary": "Actualizar un usuario",
+        "description": "Actualiza un usuario por su ID",
+        "operationId": "updateUsuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "usuario",
+            "in": "query",
+            "description": "Datos del usuario",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el usuario",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Usuario actualizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gestionar los usuarios"
+        ],
+        "summary": "Eliminar un usuario",
+        "description": "Elimina un usuario por su ID",
+        "operationId": "deleteUsuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor"
+          },
+          "404": {
+            "description": "No se ha encontrado el usuario"
+          },
+          "204": {
+            "description": "Usuario eliminado"
+          }
+        }
+      }
+    },
+    "/api/tipos-cargo/{id}": {
+      "get": {
+        "tags": [
+          "TipoCargo"
+        ],
+        "summary": "Obtener un tipo de cargo por ID",
+        "description": "Devuelve un tipo de cargo por su ID",
+        "operationId": "getTipoCargoById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del tipo de cargo",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tipo de cargo obtenido",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoCargo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoCargo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el tipo de cargo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoCargo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TipoCargo"
+        ],
+        "summary": "Actualizar un tipo de cargo",
+        "description": "Actualiza un tipo de cargo",
+        "operationId": "updateTipoCargo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del tipo de cargo",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoCargo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoCargo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el tipo de cargo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoCargo"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Tipo de cargo actualizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoCargo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TipoCargo"
+        ],
+        "summary": "Eliminar un tipo de cargo",
+        "description": "Elimina un tipo de cargo",
+        "operationId": "deleteTipoCargo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del tipo de cargo",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tipo de cargo eliminado"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          },
+          "404": {
+            "description": "No se ha encontrado el tipo de cargo"
+          }
+        }
+      }
+    },
+    "/api/reservas/{id}": {
+      "get": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Obtener una reserva por ID",
+        "description": "Devuelve una reserva por su ID",
+        "operationId": "getReservaById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reserva obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado la reserva",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Actualizar una reserva",
+        "description": "Actualiza una reserva por su ID",
+        "operationId": "updateReserva",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reserva"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "No se ha encontrado la reserva",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Reserva actualizada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Eliminar una reserva",
+        "description": "Elimina una reserva por su ID",
+        "operationId": "deleteReserva",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Reserva eliminada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/api/proveedores/{id}": {
+      "get": {
+        "tags": [
+          "Proveedor"
+        ],
+        "summary": "Obtener un proveedor por ID",
+        "description": "Devuelve un proveedor por su ID",
+        "operationId": "getProveedorById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del proveedor",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proveedor obtenido",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el proveedor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Proveedor"
+        ],
+        "summary": "Actualizar un proveedor",
+        "description": "Actualiza un proveedor",
+        "operationId": "updateProveedor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del proveedor",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Proveedor"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Proveedor actualizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el proveedor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Proveedor"
+        ],
+        "summary": "Eliminar un proveedor",
+        "description": "Elimina un proveedor",
+        "operationId": "deleteProveedor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del proveedor",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Proveedor eliminado"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          },
+          "404": {
+            "description": "No se ha encontrado el proveedor"
+          }
+        }
+      }
+    },
+    "/api/noticias/{id}": {
+      "get": {
+        "tags": [
+          "noticia-controller"
+        ],
+        "operationId": "getNoticiaById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Noticia"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "noticia-controller"
+        ],
+        "operationId": "updateNoticia",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Noticia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Noticia"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "noticia-controller"
+        ],
+        "operationId": "deleteNoticia",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/comunidades/{id}": {
+      "get": {
+        "tags": [
+          "Comunidades"
+        ],
+        "summary": "Obtener una comunidad por ID",
+        "description": "Devuelve una comunidad por su ID",
+        "operationId": "obtenerComunidad",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "No se ha encontrado la comunidad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Comunidad obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Comunidades"
+        ],
+        "summary": "Actualizar una comunidad",
+        "description": "Actualiza una comunidad por su ID",
+        "operationId": "updateComunidad",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComunidadDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "No se ha encontrado la comunidad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Comunidad actualizada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comunidades"
+        ],
+        "summary": "Eliminar una comunidad",
+        "description": "Elimina una comunidad por su ID",
+        "operationId": "deleteComunidad",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "No se ha encontrado la comunidad"
+          },
+          "204": {
+            "description": "Comunidad eliminada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/api/comunidad-proveedores/{id}": {
+      "get": {
+        "tags": [
+          "ComunidadProveedor"
+        ],
+        "summary": "Obtener una comunidad de proveedores por ID",
+        "description": "Devuelve una comunidad de proveedores por su ID",
+        "operationId": "getComunidadProveedorById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la comunidad de proveedores",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadProveedor"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Comunidad de proveedores obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadProveedor"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado la comunidad de proveedores",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadProveedor"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ComunidadProveedor"
+        ],
+        "summary": "Actualizar una comunidad de proveedores",
+        "description": "Actualiza una comunidad de proveedores",
+        "operationId": "updateComunidadProveedor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la comunidad de proveedores",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComunidadProveedor"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadProveedor"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Comunidad de proveedores actualizada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadProveedor"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado la comunidad de proveedores",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadProveedor"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ComunidadProveedor"
+        ],
+        "summary": "Eliminar una comunidad de proveedores",
+        "description": "Elimina una comunidad de proveedores",
+        "operationId": "deleteComunidadProveedor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la comunidad de proveedores",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor"
+          },
+          "204": {
+            "description": "Comunidad de proveedores eliminada"
+          },
+          "404": {
+            "description": "No se ha encontrado la comunidad de proveedores"
+          }
+        }
+      }
+    },
+    "/api/cargos/{id}": {
+      "get": {
+        "tags": [
+          "Gestión de los cargos"
+        ],
+        "summary": "Obtener un cargo por ID",
+        "description": "Devuelve un cargo por su ID",
+        "operationId": "getCargoById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cargo obtenido",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargoDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el cargo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargoDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargoDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Gestión de los cargos"
+        ],
+        "summary": "Actualizar un cargo",
+        "description": "Actualiza un cargo",
+        "operationId": "updateCargo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CargoDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Cargo actualizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargoDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el cargo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargoDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargoDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gestión de los cargos"
+        ],
+        "summary": "Eliminar un cargo",
+        "description": "Elimina un cargo",
+        "operationId": "deleteCargo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cargo eliminado"
+          },
+          "404": {
+            "description": "No se ha encontrado el cargo"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          }
+        }
+      }
+    },
+    "/api/cargos-comunidad/{id}": {
+      "get": {
+        "tags": [
+          "Cargos de la comunidad"
+        ],
+        "summary": "Obtener un cargo de la comunidad por ID",
+        "description": "Devuelve un cargo de la comunidad por su ID",
+        "operationId": "getCargosComunidadById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargosComunidadDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Cargo de la comunidad obtenido",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargosComunidadDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el cargo de la comunidad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargosComunidadDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Cargos de la comunidad"
+        ],
+        "summary": "Actualizar un cargo de la comunidad",
+        "description": "Actualiza un cargo de la comunidad",
+        "operationId": "updateCargosComunidad",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CargosComunidadDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Cargo de la comunidad actualizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargosComunidadDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargosComunidadDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el cargo de la comunidad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargosComunidadDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cargos de la comunidad"
+        ],
+        "summary": "Eliminar un cargo de la comunidad",
+        "description": "Elimina un cargo de la comunidad",
+        "operationId": "deleteCargosComunidad",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor"
+          },
+          "404": {
+            "description": "No se ha encontrado el cargo de la comunidad"
+          },
+          "204": {
+            "description": "Cargo de la comunidad eliminado"
+          }
+        }
+      }
+    },
+    "/api/actividades/{id}": {
+      "get": {
+        "tags": [
+          "Gestión de las actividades"
+        ],
+        "summary": "Obtener una actividad por ID",
+        "description": "Devuelve una actividad por su ID",
+        "operationId": "getActividadById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActividadDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Actividad obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActividadDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado la actividad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActividadDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Gestión de las actividades"
+        ],
+        "summary": "Actualizar una actividad",
+        "description": "Actualiza una actividad",
+        "operationId": "updateActividad",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActividadDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Actividad actualizada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActividadDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActividadDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado la actividad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActividadDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gestión de las actividades"
+        ],
+        "summary": "Eliminar una actividad",
+        "description": "Elimina una actividad",
+        "operationId": "deleteActividad",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Actividad eliminada"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          },
+          "404": {
+            "description": "No se ha encontrado la actividad"
+          }
+        }
+      }
+    },
+    "/api/viviendas": {
+      "get": {
+        "tags": [
+          "Viviendas"
+        ],
+        "summary": "Obtiene todas las viviendas",
+        "description": "Devuelve una lista con todas las viviendas",
+        "operationId": "getAllViviendas",
+        "responses": {
+          "200": {
+            "description": "Lista de viviendas obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ViviendaDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ViviendaDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ninguna vivienda",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ViviendaDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Viviendas"
+        ],
+        "summary": "Crear una vivienda",
+        "description": "Crea una nueva vivienda",
+        "operationId": "createVivienda",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ViviendaDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViviendaDTO"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Vivienda creada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViviendaDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/usuarios": {
+      "get": {
+        "tags": [
+          "Gestionar los usuarios"
+        ],
+        "summary": "Obtiene todos los usuarios",
+        "description": "Devuelve una lista con todos los usuarios",
+        "operationId": "getAllUsuarios",
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDTO"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Lista de usuarios obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ningún usuario",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Gestionar los usuarios"
+        ],
+        "summary": "Crear un usuario",
+        "description": "Crea un nuevo usuario",
+        "operationId": "createUsuario",
+        "parameters": [
+          {
+            "name": "usuario",
+            "in": "query",
+            "description": "Datos del usuario",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Usuario creado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/usuarios/crearConRoles": {
+      "post": {
+        "tags": [
+          "Gestionar los usuarios"
+        ],
+        "summary": "Crear un usuario con roles",
+        "description": "Crea un nuevo usuario con roles asignados",
+        "operationId": "createUserWithRoles",
+        "parameters": [
+          {
+            "name": "usuario",
+            "in": "query",
+            "description": "Datos del usuario",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Usuario creado con roles",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tipos-cargo": {
+      "get": {
+        "tags": [
+          "TipoCargo"
+        ],
+        "summary": "Obtener todos los tipos de cargo",
+        "description": "Obtiene todos los tipos de cargo",
+        "operationId": "getAllTiposCargo",
+        "responses": {
+          "200": {
+            "description": "Lista de tipos de cargo obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoCargo"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoCargo"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ningún tipo de cargo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoCargo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "TipoCargo"
+        ],
+        "summary": "Crear un tipo de cargo",
+        "description": "Crea un nuevo tipo de cargo",
+        "operationId": "createTipoCargo",
+        "parameters": [
+          {
+            "name": "tipoCargoDTO",
+            "in": "query",
+            "description": "Tipo de cargo a crear",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoCargo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Tipo de cargo creado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoCargo"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoCargo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles": {
+      "get": {
+        "tags": [
+          "Rol"
+        ],
+        "summary": "Obtener todos los roles",
+        "description": "Obtiene todos los roles",
+        "operationId": "getAllRoles",
+        "responses": {
+          "200": {
+            "description": "Lista de roles obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Rol"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Rol"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ningún rol",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Rol"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Rol"
+        ],
+        "summary": "Obtener todos los roles",
+        "description": "Obtiene todos los roles",
+        "operationId": "createRol",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rol"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Lista de roles obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rol"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rol"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ningún rol",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rol"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservas": {
+      "get": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Obtener todas las reservas",
+        "description": "Devuelve una lista con todas las reservas",
+        "operationId": "getAllReservas",
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reserva"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ninguna reserva",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reserva"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Lista de reservas obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reserva"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reservas"
+        ],
+        "summary": "Crear una reserva",
+        "description": "Crea una nueva reserva",
+        "operationId": "createReserva",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reserva"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Reserva creada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/proveedores": {
+      "get": {
+        "tags": [
+          "Proveedor"
+        ],
+        "summary": "Obtener todos los proveedores",
+        "description": "Obtiene todos los proveedores",
+        "operationId": "getAllProveedores",
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Proveedor"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ningún proveedor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Proveedor"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Lista de proveedores obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Proveedor"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Proveedor"
+        ],
+        "summary": "Crear un proveedor",
+        "description": "Crea un nuevo proveedor",
+        "operationId": "createProveedor",
+        "parameters": [
+          {
+            "name": "proveedorDTO",
+            "in": "query",
+            "description": "Proveedor a crear",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Proveedor"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Proveedor creado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/noticias": {
+      "get": {
+        "tags": [
+          "noticia-controller"
+        ],
+        "operationId": "getAllNoticias",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Noticia"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "noticia-controller"
+        ],
+        "operationId": "createNoticia",
+        "parameters": [
+          {
+            "name": "usuarioId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Noticia"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Noticia"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/comunidades": {
+      "get": {
+        "tags": [
+          "Comunidades"
+        ],
+        "summary": "Obtener todas las comunidades",
+        "description": "Devuelve una lista con todas las comunidades",
+        "operationId": "getAllComunidades",
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ninguna comunidad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadDTO"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Lista de comunidades obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Comunidades"
+        ],
+        "summary": "Crear una comunidad",
+        "description": "Crea una nueva comunidad",
+        "operationId": "createComunidad",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComunidadDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Comunidad creada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/comunidad-proveedores": {
+      "get": {
+        "tags": [
+          "ComunidadProveedor"
+        ],
+        "summary": "Obtener todas las comunidades de proveedores",
+        "description": "Obtiene todas las comunidades de proveedores",
+        "operationId": "getAllComunidadProveedores",
+        "responses": {
+          "200": {
+            "description": "Lista de comunidades de proveedores obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadProveedor"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ninguna comunidad de proveedores",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadProveedor"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadProveedor"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ComunidadProveedor"
+        ],
+        "summary": "Crear una comunidad de proveedores",
+        "description": "Crea una nueva comunidad de proveedores",
+        "operationId": "createComunidadProveedor",
+        "parameters": [
+          {
+            "name": "comunidadProveedorDTO",
+            "in": "query",
+            "description": "Comunidad de proveedores a crear",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComunidadProveedor"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Comunidad de proveedores creada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadProveedor"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunidadProveedor"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cargos": {
+      "get": {
+        "tags": [
+          "Gestión de los cargos"
+        ],
+        "summary": "Obtener todos los cargos",
+        "description": "Obtiene todos los cargos",
+        "operationId": "getAllCargos",
+        "responses": {
+          "204": {
+            "description": "Lista de cargos obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CargoDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ningún cargo",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CargoDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CargoDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Gestión de los cargos"
+        ],
+        "summary": "Crear un cargo",
+        "description": "Crea un cargo",
+        "operationId": "createCargo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CargoDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Cargo creado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargoDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargoDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cargos-comunidad": {
+      "get": {
+        "tags": [
+          "Cargos de la comunidad"
+        ],
+        "summary": "Obtener todos los cargos de la comunidad",
+        "description": "Obtiene todos los cargos de la comunidad",
+        "operationId": "getAllCargosComunidad",
+        "responses": {
+          "404": {
+            "description": "No se ha encontrado ningún cargo de la comunidad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CargosComunidadDTO"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Lista de cargos de la comunidad obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CargosComunidadDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CargosComunidadDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cargos de la comunidad"
+        ],
+        "summary": "Crear un cargo de la comunidad",
+        "description": "Crea un cargo de la comunidad",
+        "operationId": "createCargosComunidad",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CargosComunidadDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Cargo de la comunidad creado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargosComunidadDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CargosComunidadDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/actividades": {
+      "get": {
+        "tags": [
+          "Gestión de las actividades"
+        ],
+        "summary": "Obtener todas las actividades",
+        "description": "Obtiene todas las actividades",
+        "operationId": "getAllActividades",
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActividadDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ninguna actividad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActividadDTO"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Lista de actividades obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActividadDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Gestión de las actividades"
+        ],
+        "summary": "Crear una actividad",
+        "description": "Crea una actividad",
+        "operationId": "createActividad",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActividadDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActividadDTO"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Actividad creada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActividadDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/secure/hello": {
+      "get": {
+        "tags": [
+          "secure-controller"
+        ],
+        "operationId": "securedHello",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/roles/{id}": {
+      "get": {
+        "tags": [
+          "Rol"
+        ],
+        "summary": "Obtener un rol por ID",
+        "description": "Devuelve un rol por su ID",
+        "operationId": "getRolById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del rol",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rol"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el rol",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rol"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Rol obtenido",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rol"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Rol"
+        ],
+        "summary": "Actualizar un rol",
+        "description": "Actualiza un rol",
+        "operationId": "deleteRol",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del rol",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rol actualizado"
+          },
+          "500": {
+            "description": "Error interno del servidor"
+          },
+          "404": {
+            "description": "No se ha encontrado el rol"
+          }
+        }
+      }
+    },
+    "/api/public/secure/hello": {
+      "get": {
+        "tags": [
+          "no-secure-controller"
+        ],
+        "operationId": "securedHello_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/comunidades/simple": {
+      "get": {
+        "tags": [
+          "Comunidades"
+        ],
+        "summary": "Obtener todas las comunidades de forma simple",
+        "description": "Devuelve una lista con todas las comunidades de forma simple",
+        "operationId": "getComunidadesSimple",
+        "responses": {
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado ninguna comunidad",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadDTO"
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Lista de comunidades obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunidadDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ViviendaDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador de la vivienda",
+            "format": "int64",
+            "example": 1
+          },
+          "portal": {
+            "type": "string",
+            "description": "Portal de la vivienda",
+            "example": "A"
+          },
+          "escalera": {
+            "type": "string",
+            "description": "Escalera de la vivienda",
+            "example": "1"
+          },
+          "puerta": {
+            "type": "string",
+            "description": "Puerta de la vivienda",
+            "example": "1"
+          },
+          "Alquilado": {
+            "type": "boolean",
+            "description": "Indica si la vivienda está alquilada",
+            "example": false
+          },
+          "alCorrientePago": {
+            "type": "boolean",
+            "description": "Indica si la vivienda está al corriente de pago",
+            "example": true
+          },
+          "comunidadId": {
+            "type": "integer",
+            "description": "Identificador de la comunidad a la que pertenece",
+            "format": "int64",
+            "example": 1
+          },
+          "propietariosIds": {
+            "type": "array",
+            "description": "Lista de identificadores de los propietarios",
+            "example": [1, 2],
+            "items": {
+              "type": "integer",
+              "description": "Lista de identificadores de los propietarios",
+              "format": "int64"
+            }
+          }
+        }
+      },
+      "UsuarioDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador del usuario",
+            "format": "int64",
+            "example": 1
+          },
+          "username": {
+            "type": "string",
+            "description": "Nombre de usuario",
+            "example": "antonio"
+          },
+          "password": {
+            "type": "string",
+            "description": "Contraseña del usuario",
+            "example": "1234"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del usuario",
+            "example": "Antonio"
+          },
+          "apellido": {
+            "type": "string",
+            "description": "Apellido del usuario",
+            "example": "García"
+          },
+          "email": {
+            "type": "string",
+            "description": "Correo electrónico del usuario"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Indica si el usuario está habilitado",
+            "example": true
+          },
+          "rolesIds": {
+            "type": "array",
+            "description": "Lista de IDs de roles del usuario",
+            "example": [1, 2],
+            "items": {
+              "type": "integer",
+              "description": "Lista de IDs de roles del usuario",
+              "format": "int64"
+            }
+          },
+          "viviendasIds": {
+            "type": "array",
+            "description": "Lista de IDs de viviendas del usuario",
+            "example": [1, 2],
+            "items": {
+              "type": "integer",
+              "description": "Lista de IDs de viviendas del usuario",
+              "format": "int64"
+            }
+          },
+          "comunidadesIds": {
+            "type": "array",
+            "description": "Lista de IDs de comunidades del usuario",
+            "example": [1, 2],
+            "items": {
+              "type": "integer",
+              "description": "Lista de IDs de comunidades del usuario",
+              "format": "int64"
+            }
+          }
+        },
+        "description": "Datos del usuario"
+      },
+      "TipoCargo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador del tipo de cargo",
+            "format": "int64",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del tipo de cargo",
+            "example": "Presidente"
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripción del tipo de cargo",
+            "example": "Cargo de presidente"
+          }
+        },
+        "description": "Tipo de cargo a crear"
+      },
+      "Reserva": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador de la reserva",
+            "format": "int64",
+            "example": 1
+          },
+          "usuarioId": {
+            "type": "integer",
+            "description": "Identificador del usuario que realiza la reserva",
+            "format": "int64",
+            "example": 1
+          },
+          "actividadId": {
+            "type": "integer",
+            "description": "Identificador de la actividad que se reserva",
+            "format": "int64",
+            "example": 1
+          },
+          "fechaReserva": {
+            "type": "string",
+            "description": "Fecha y hora de la reserva",
+            "format": "date-time"
+          }
+        },
+        "description": "Información de la reserva de una actividad"
+      },
+      "Proveedor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador del proveedor",
+            "format": "int64",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del proveedor",
+            "example": "Proveedor 1"
+          },
+          "direccion": {
+            "type": "string",
+            "description": "Dirección del proveedor",
+            "example": "Calle Falsa 123"
+          },
+          "telefono": {
+            "type": "string",
+            "description": "Teléfono del proveedor",
+            "example": "123456789"
+          },
+          "email": {
+            "type": "string",
+            "example": "example@example.com"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "description": "Identificador del usuario asociado",
+            "format": "int64",
+            "example": 1
+          },
+          "habilitado": {
+            "type": "boolean",
+            "description": "Indica si el proveedor está habilitado",
+            "example": true
+          }
+        },
+        "description": "Proveedor a crear"
+      },
+      "Noticia": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador de la noticia",
+            "format": "int64",
+            "example": 1
+          },
+          "titulo": {
+            "type": "string",
+            "description": "Título de la noticia",
+            "example": "Noticia 1"
+          },
+          "contenido": {
+            "type": "string",
+            "description": "Contenido de la noticia",
+            "example": "Contenido de la noticia 1"
+          },
+          "autorId": {
+            "type": "integer",
+            "description": "Identificador del autor de la noticia",
+            "format": "int64",
+            "example": 1
+          },
+          "fecha": {
+            "type": "string",
+            "description": "Fecha de publicación de la noticia",
+            "format": "date-time"
+          }
+        },
+        "description": "Información de una noticia"
+      },
+      "ComunidadDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "estadoActivo": {
+            "type": "boolean"
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date"
+          },
+          "numeroTotalViviendas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numeroTotalUsuarios": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viviendasConUsuarios": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viviendasSinUsuarios": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numeroTotalActividades": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ComunidadProveedor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador de la relación comunidad-proveedor",
+            "format": "int64",
+            "example": 1
+          },
+          "comunidadId": {
+            "type": "integer",
+            "description": "Identificador de la comunidad",
+            "format": "int64",
+            "example": 1
+          },
+          "proveedorId": {
+            "type": "integer",
+            "description": "Identificador del proveedor",
+            "format": "int64",
+            "example": 1
+          },
+          "habilitado": {
+            "type": "boolean",
+            "description": "Indica si la relación está habilitada",
+            "example": true
+          },
+          "fechaAlta": {
+            "type": "string",
+            "description": "Fecha de alta de la relación",
+            "format": "date-time"
+          },
+          "fechaBaja": {
+            "type": "string",
+            "description": "Fecha de baja de la relación",
+            "format": "date-time"
+          },
+          "fechaModificacion": {
+            "type": "string",
+            "description": "Fecha de modificación de la relación",
+            "format": "date-time"
+          }
+        },
+        "description": "Comunidad de proveedores a crear"
+      },
+      "CargoDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          }
+        }
+      },
+      "CargosComunidadDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "comunidadId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "tipoCargoId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "string"
+          }
+        }
+      },
+      "ActividadDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "disponible": {
+            "type": "boolean"
+          },
+          "requiereReserva": {
+            "type": "boolean"
+          },
+          "comunidadId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "numeroReservas": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Rol": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Identificador del rol",
+            "format": "int64",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del rol",
+            "example": "ROLE_USER"
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripción del rol",
+            "example": "Rol de usuario"
+          }
+        },
+        "description": "Información del rol de un usuario"
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
